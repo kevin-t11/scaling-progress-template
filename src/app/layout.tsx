@@ -28,6 +28,13 @@ export const metadata: Metadata = {
     images: ["/logo.png"],
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Build Software That Moves Your Business Forward",
+    description:
+      "Transform your vision into reality with software solutions. We help businesses scale faster, work smarter, and stay ahead of the competition.",
+    images: ["/logo.png"],
+  },
 };
 
 export default function RootLayout({
