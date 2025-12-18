@@ -16,6 +16,7 @@ export default function Page() {
           <HeroImage />
           <SectionSeparator />
           <HowItWorks />
+          <SectionSeparator />
         </Container>
       </BackgroundPattern>
     </div>
@@ -30,7 +31,7 @@ const SectionSeparator = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        "mx-auto flex h-8 w-full max-w-xs md:max-w-[596px] items-center gap-6 px-4 mb-32",
+        "mx-auto flex h-8 w-full max-w-xs md:max-w-[596px] items-center gap-6 px-4",
         className
       )}
     >

@@ -19,7 +19,7 @@ const buttonVariants = cva(
           "bg-destructive/10 hover:bg-destructive/20 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/20 text-destructive focus-visible:border-destructive/40 dark:hover:bg-destructive/30",
         link: "text-primary underline-offset-4 hover:underline",
         skeuomorphic:
-          "dark:ring-offset-primary-400 rounded-full bg-gradient-to-r from-indigo-400 to-indigo-500 ring-2 ring-indigo-500 transition-all duration-300 hover:brightness-110 active:scale-95 active:ring-transparent text-white font-medium",
+          "dark:ring-offset-primary-400 rounded-full bg-linear-to-r from-indigo-400 to-indigo-500 ring-2 ring-indigo-500 transition-all duration-300 hover:brightness-110 active:scale-95 active:ring-transparent text-white font-medium",
       },
       size: {
         default:
