@@ -1,6 +1,10 @@
 "use client";
-import { motion, useScroll, useTransform } from "motion/react";
+
+import { motion, MotionValue, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
+import { BuildSkeleton } from "./how-it-works/BuildSkeleton";
+import { ProductSkeleton } from "./how-it-works/ProductSkeleton";
+import { ScaleSkeleton } from "./how-it-works/ScaleSkeleton";
 
 export const HowItWorks = () => {
   const items = [
@@ -8,104 +12,134 @@ export const HowItWorks = () => {
       title: "Product Strategy",
       description:
         "We’ll help you clarify your vision, define the right feature set, and turn your idea into a scalable software product roadmap.",
-      skeleton: <div />,
+      skeleton: <ProductSkeleton />,
     },
     {
       title: "Build",
       description:
-        "We design and build your software product with a clean design, strong technology, and everything working smoothly from day one",
-      skeleton: <div />,
+        "We design and build your software product with a clean design, strong technology, and everything working smoothly from day one.",
+      skeleton: <BuildSkeleton />,
     },
     {
       title: "Scale",
       description:
         "Once your product is live, we help you grow. From improving speed to adding features or handling more users, we make sure your software keeps up as your business grows.",
-      skeleton: <div />,
+      skeleton: <ScaleSkeleton />,
     },
   ];
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
   return (
-    <div className="flex flex-col items-center justify-center gap-4 px-4">
-      <span className="rounded-full bg-indigo-500 px-4 py-1.5 text-sm text-white font-medium ring-2 ring-indigo-500/20">
+    <section className="flex flex-col items-center px-4">
+      <span className="rounded-full bg-linear-to-r from-indigo-400 to-indigo-500 ring-2 ring-indigo-500 transition-all duration-300 px-4 py-1 text-white font-medium ring-offset-1">
         How it works
       </span>
-      <div className="flex flex-col items-center justify-center gap-3 max-w-3xl mx-auto mb-10">
-        <h2 className="text-center text-4xl md:text-5xl font-bold tracking-tight text-neutral-900">
-          Your Journey to Success
-        </h2>
-        <p className="text-center text-lg text-muted-foreground font-medium">
-          Three simple steps to build powerful software products
-        </p>
-      </div>
 
-      <div className="flex flex-col items-center w-full max-w-4xl mx-auto relative gap-4">
+      <h2 className="text-center text-4xl md:text-5xl font-bold tracking-tight text-neutral-900">
+        Your Journey to Success
+      </h2>
+
+      <p className="text-center text-lg text-neutral-500 mt-4 mb-16 max-w-2xl">
+        Three simple steps to build powerful software products
+      </p>
+
+      <div
+        ref={containerRef}
+        className="relative flex flex-col gap-6 w-full max-w-4xl"
+      >
         {items.map((item, index) => (
           <Card
             key={index}
-            index={index + 1}
+            index={index}
+            total={items.length}
+            progress={scrollYProgress}
             title={item.title}
             description={item.description}
             skeleton={item.skeleton}
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 
 const Card = ({
   index,
+  total,
+  progress,
   title,
   description,
   skeleton,
 }: {
   index: number;
+  total: number;
+  progress: MotionValue<number>;
   title: string;
   description: string;
   skeleton: React.ReactNode;
 }) => {
-  const cardRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "start start"],
-  });
+  /**
+   * Each card occupies an equal slice of scroll space
+   */
+  const start = index / total;
+  const end = (index + 1) / total;
 
-  const scale = useTransform(scrollYProgress, [0, 1], [0.85, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [0.9, 1]);
+  /**
+   * Card flow animation (Pyramid Stack):
+   * - Active card = scale 1
+   * - As next cards stack on top, this card scales down progressively
+   */
+  const scale = useTransform(
+    progress,
+    [start, end, 1],
+    [1, 1, 1 - (total - index - 1) * 0.04]
+  );
 
-  const stickyTop = 100 + (index - 1) * 24;
+  const opacity = useTransform(progress, [start - 0.1, start - 0.05], [0, 1]);
+
+  const y = useTransform(progress, [start - 0.1, start], [24, 0]);
+
+  const stickyTop = 120 + index * 28;
 
   return (
-    <div
-      ref={cardRef}
-      className="w-full min-h-[50vh] flex items-start justify-center sticky"
-      style={{ top: `${stickyTop}px` }}
-    >
+    <div className="sticky flex justify-center" style={{ top: stickyTop }}>
       <motion.div
-        style={{ scale, opacity }}
-        className="relative max-w-4xl bg-white border border-neutral-200 rounded-3xl shadow-lg w-full h-[400px] overflow-hidden group"
+        style={{
+          scale,
+          opacity,
+          y,
+          zIndex: index,
+          transformOrigin: "top",
+        }}
+        className="relative w-full h-[420px] rounded-3xl bg-white border border-neutral-200 shadow-xl overflow-hidden"
       >
-        <div className="grid md:grid-cols-2 grid-cols-1 h-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 h-full">
+          {/* Left */}
           <div className="p-10 flex flex-col justify-between border-r border-neutral-100">
             <div className="flex flex-col gap-4">
               <span className="w-fit rounded-full bg-indigo-50 text-indigo-600 font-bold px-3 py-1 text-xs uppercase tracking-wider">
-                Step {index}
+                PHASE {index + 1}
               </span>
               <h3 className="text-3xl font-bold text-neutral-900">{title}</h3>
               <p className="text-neutral-600 leading-relaxed font-medium">
                 {description}
               </p>
             </div>
-            <div className="text-8xl font-black text-neutral-50 group-hover:text-indigo-50/50 transition-colors select-none">
-              {index.toString().padStart(2, "0")}
+            <div className="text-8xl font-black text-indigo-50 select-none">
+              {(index + 1).toString().padStart(2, "0")}
             </div>
           </div>
+
+          {/* Right */}
           <div className="bg-neutral-50 flex items-center justify-center p-8">
             <div className="w-full h-full rounded-2xl bg-white border border-neutral-100 shadow-inner flex items-center justify-center">
               {skeleton}
-              <span className="text-xs font-mono text-neutral-300 uppercase tracking-widest">
-                Preview {index}
-              </span>
             </div>
           </div>
         </div>

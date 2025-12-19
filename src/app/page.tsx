@@ -17,6 +17,7 @@ export default function Page() {
           <SectionSeparator />
           <HowItWorks />
           <SectionSeparator />
+          <HeroImage />
         </Container>
       </BackgroundPattern>
     </div>

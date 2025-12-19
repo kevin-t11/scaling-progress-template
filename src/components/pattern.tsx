@@ -20,7 +20,6 @@ export const BackgroundPattern = ({
           "mask-intersect"
         )}
       />
-      {/* Content */}
       <div className="relative z-10 w-full">{children}</div>
     </div>
   );
