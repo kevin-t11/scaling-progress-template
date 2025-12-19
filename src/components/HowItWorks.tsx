@@ -36,12 +36,12 @@ export const HowItWorks = () => {
   });
 
   return (
-    <section className="flex flex-col items-center px-4">
-      <span className="rounded-full bg-linear-to-r from-indigo-400 to-indigo-500 ring-2 ring-indigo-500 transition-all duration-300 px-4 py-1 text-white font-medium ring-offset-1">
+    <section className="flex flex-col items-center px-4 -mt-6">
+      <span className="my-4 rounded-full bg-linear-to-r from-indigo-400 to-indigo-500 ring-2 ring-indigo-500 transition-all duration-300 px-4 py-1 text-white font-medium ring-offset-1">
         How it works
       </span>
 
-      <h2 className="text-center text-4xl md:text-5xl font-bold tracking-tight text-neutral-900">
+      <h2 className="text-center text-4xl md:text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-linear-to-t from-neutral-700 to-neutral-900">
         Your Journey to Success
       </h2>
 
@@ -51,7 +51,7 @@ export const HowItWorks = () => {
 
       <div
         ref={containerRef}
-        className="relative flex flex-col gap-6 w-full max-w-4xl"
+        className="relative flex flex-col gap-6 w-full max-w-4xl px-2 md:px-0"
       >
         {items.map((item, index) => (
           <Card
@@ -117,11 +117,11 @@ const Card = ({
           zIndex: index,
           transformOrigin: "top",
         }}
-        className="relative w-full h-[420px] rounded-3xl bg-white border border-neutral-200 shadow-xl overflow-hidden"
+        className="relative w-full h-[420px rounded-3xl bg-white border border-neutral-200 shadow-xl overflow-hidden"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 h-full">
           {/* Left */}
-          <div className="p-10 flex flex-col justify-between border-r border-neutral-100">
+          <div className="p-10 flex flex-col justify-between border-r border-neutral-100 gap-2">
             <div className="flex flex-col gap-4">
               <span className="w-fit rounded-full bg-indigo-50 text-indigo-600 font-bold px-3 py-1 text-xs uppercase tracking-wider">
                 PHASE {index + 1}
@@ -131,13 +131,13 @@ const Card = ({
                 {description}
               </p>
             </div>
-            <div className="text-8xl font-black text-indigo-50 select-none">
+            <div className="text-7xl md:text-8xl font-black text-indigo-50 select-none">
               {(index + 1).toString().padStart(2, "0")}
             </div>
           </div>
 
           {/* Right */}
-          <div className="bg-neutral-50 flex items-center justify-center p-8">
+          <div className="hidden md:flex bg-neutral-50 items-center justify-center p-8">
             <div className="w-full h-full rounded-2xl bg-white border border-neutral-100 shadow-inner flex items-center justify-center">
               {skeleton}
             </div>

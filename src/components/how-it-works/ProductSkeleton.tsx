@@ -20,7 +20,7 @@ export const ProductSkeleton = () => {
       </div>
 
       <motion.div
-        className="absolute size-60 rounded-full border-4 border-dashed border-indigo-400/30"
+        className="absolute size-52 rounded-full border-4 border-dashed border-indigo-400/30"
         animate={{ rotate: 360 }}
         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
       />

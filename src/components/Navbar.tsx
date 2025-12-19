@@ -1,7 +1,7 @@
 "use client";
 
-import { MenuIcon, XIcon } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { cn } from "@/lib/utils";
+import { motion } from "motion/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -13,7 +13,7 @@ export const Navbar = () => {
   const navItems = [
     { label: "Home", href: "#" },
     { label: "How It Works", href: "#how-it-works" },
-    { label: "Why ScalingProgress", href: "#why-viewcount" },
+    { label: "Why ScalingProgress", href: "#why-scalingprogress" },
     { label: "Testimonials", href: "#testimonials" },
     { label: "FAQ", href: "#faq" },
   ];
@@ -47,21 +47,12 @@ export const Navbar = () => {
           </div>
 
           <div className="md:hidden flex items-center justify-center">
-            {isMenuOpen ? (
-              <button
-                className="active:scale-95 active:rorate-45 transition-all duration-300"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <XIcon className="size-6" />
-              </button>
-            ) : (
-              <button
-                className="active:scale-95 active:rorate-45 transition-all duration-300"
-                onClick={() => setIsMenuOpen(true)}
-              >
-                <MenuIcon className="size-6" />
-              </button>
-            )}
+            <button
+              className="active:scale-95 transition-all duration-300 size-6"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <MenuIcon toggle={isMenuOpen} />
+            </button>
           </div>
         </div>
       </nav>
@@ -69,16 +60,15 @@ export const Navbar = () => {
         <div className="md:hidden absolute left-1/2 -translate-x-1/2 mt-2 w-full max-w-sm px-4 z-40">
           <div className="flex flex-col items-start justify-center gap-2 px-4 py-4 w-full rounded-2xl border border-border/60 bg-background/95 shadow-lg backdrop-blur">
             {navItems.map((item, index) => (
-              <AnimatePresence mode="wait" key={item.label}>
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                  className="font-medium text-neutral-800 hover:text-primary border-b border-neutral-200/60 last:border-b-0 px-2 py-2 w-full text-left"
-                >
-                  <Link href={item.href}>{item.label}</Link>
-                </motion.div>
-              </AnimatePresence>
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+                className="font-medium text-neutral-800 hover:text-primary border-b border-neutral-200/60 last:border-b-0 px-2 py-2 w-full text-left"
+              >
+                <Link href={item.href}>{item.label}</Link>
+              </motion.div>
             ))}
 
             <motion.div
@@ -139,5 +129,38 @@ export const Logo = (props: React.SVGProps<SVGSVGElement>) => {
       </g>
       <g id="logotype" transform="translate(67, 20.5)"></g>
     </svg>
+  );
+};
+
+const MenuIcon = ({
+  className,
+  toggle,
+}: {
+  className?: string;
+  toggle: boolean;
+}) => {
+  return (
+    <div
+      className={cn(
+        "group flex size-full cursor-pointer items-center justify-center",
+        className
+      )}
+    >
+      <div className="relative grid size-4 cursor-pointer items-center justify-center">
+        <motion.div
+          animate={{ y: toggle ? 0 : "-5px", rotate: toggle ? 45 : 0 }}
+          className="absolute h-0.5 w-full rounded-full bg-current"
+        ></motion.div>
+        <motion.div
+          animate={{ opacity: toggle ? 0 : 1 }}
+          transition={{ duration: 0.1 }}
+          className="absolute h-0.5 w-full rounded-full bg-current"
+        ></motion.div>
+        <motion.div
+          animate={{ y: toggle ? 0 : "5px", rotate: toggle ? -45 : 0 }}
+          className="absolute h-0.5 w-full rounded-full bg-current"
+        ></motion.div>
+      </div>
+    </div>
   );
 };

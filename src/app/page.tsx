@@ -3,6 +3,7 @@ import { HeroImage } from "@/components/HeroImage";
 import { HowItWorks } from "@/components/HowItWorks";
 import { Logo, Navbar } from "@/components/Navbar";
 import { BackgroundPattern } from "@/components/pattern";
+import { Testimonial } from "@/components/testimonial";
 import { cn } from "@/lib/utils";
 import type React from "react";
 
@@ -17,7 +18,7 @@ export default function Page() {
           <SectionSeparator />
           <HowItWorks />
           <SectionSeparator />
-          <HeroImage />
+          <Testimonial />
         </Container>
       </BackgroundPattern>
     </div>

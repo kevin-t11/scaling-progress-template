@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 
 export const BuildSkeleton = () => {
   return (
-    <div className="shadow-sm size-full p-8 rounded-lg">
+    <div className="shadow-sm size-full p-6 rounded-lg">
       <div className="relative size-full rounded-lg flex flex-col gap-4 border border-muted">
         <div className="h-10 w-full bg-muted rounded-tr-lg rounded-tl-lg">
           <div className="flex justify-start items-center gap-2 h-full px-3">
