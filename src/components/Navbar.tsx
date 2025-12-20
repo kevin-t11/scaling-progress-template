@@ -13,7 +13,7 @@ export const Navbar = () => {
   const navItems = [
     { label: "Home", href: "#" },
     { label: "How It Works", href: "#how-it-works" },
-    { label: "Why ScalingProgress", href: "#why-scalingprogress" },
+    { label: "Why ScalingProcess", href: "#why-scalingprocess" },
     { label: "Testimonials", href: "#testimonials" },
     { label: "FAQ", href: "#faq" },
   ];
